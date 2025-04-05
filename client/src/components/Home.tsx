@@ -21,7 +21,7 @@ export default function Home() {
     setTimeout(async () => {
       try {
         console.log('📡 Fetching album from backend...');
-        const res = await fetch('/api/random-album');
+        const res = await fetch('/api/random-album'); // ✅ relative path!
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
   
         const data = await res.json();
