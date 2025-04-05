@@ -1,4 +1,4 @@
-/* Slow spin animation */
+/* Slow spin animation for the vinyl */
 @keyframes spin-slow {
     from {
       transform: rotate(0deg);
@@ -12,7 +12,7 @@
     animation: spin-slow 5s linear infinite;
   }
   
-  /* Floating music notes base style */
+  /* Floating music notes style */
   .floating-notes {
     position: absolute;
     font-size: 2rem;
@@ -22,7 +22,6 @@
     white-space: nowrap;
   }
   
-  /* Left side notes */
   .floating-notes-left {
     content: "🎵 🎶";
     left: 2%;
@@ -30,7 +29,6 @@
     animation-delay: 0s;
   }
   
-  /* Right side notes */
   .floating-notes-right {
     content: "🎶 🎵";
     right: 2%;
@@ -38,7 +36,7 @@
     animation-delay: 4s;
   }
   
-  /* Floating up animation */
+  /* Floating effect */
   @keyframes floatNotes {
     0% {
       transform: translateY(0) rotate(0deg);
@@ -60,10 +58,52 @@
     border-radius: 8px;
     color: #fff;
   }
+  
   .custom-audio-player .rhap_progress-bar {
-    background-color: #facc15 !important; /* Tailwind yellow-400 */
+    background-color: #facc15 !important; /* Yellow progress bar */
   }
+  
   .custom-audio-player .rhap_time {
     color: #fff !important;
+  }
+  
+  /* Pulse animation for "Spin a Reggae Record" button */
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }
+  
+  button:hover {
+    animation: pulse 0.8s ease-in-out infinite;
+  }
+  
+  /* Loading animation for track */
+  @keyframes spin-loading {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  .vinyl-loading-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: spin-loading 2s linear infinite;
+  }
+  
+  /* Mobile responsive design */
+  @media (max-width: 640px) {
+    .vinyl-loading-spinner {
+      width: 80px;
+      height: 80px;
+    }
+    .custom-audio-player .rhap_container {
+      padding: 8px;
+    }
+    .track-card {
+      width: 100%;
+      padding: 10px;
+    }
   }
   

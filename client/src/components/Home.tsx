@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
-import './Home.css'; // 👈 Make sure this is imported
+import './Home.css'; // Make sure to import the updated CSS
 
 type TrackData = {
   title: string;
@@ -43,7 +43,7 @@ export default function Home() {
       className="min-h-screen bg-gradient-to-br from-yellow-100 via-green-100 to-red-100 text-center text-black p-4 relative overflow-hidden"
       style={{ backgroundImage: "url('/images/studio-bg.jpg')" }}
     >
-      {/* 🎶 Floating music notes */}
+      {/* Floating Music Notes */}
       <div className="floating-notes floating-notes-left" />
       <div className="floating-notes floating-notes-right" />
 
@@ -64,7 +64,7 @@ export default function Home() {
         disabled={isSpinning}
         className="bg-green-700 text-white px-8 py-4 rounded-full shadow-lg hover:bg-green-800 transition-all text-xl uppercase tracking-wider disabled:opacity-50"
       >
-        {isSpinning ? 'Loading...' : '🎵 Spin a Reggae Track'}
+        {isSpinning ? 'Loading...' : '🎵 Spin a Reggae Record'}
       </button>
 
       <AnimatePresence>
