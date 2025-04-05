@@ -42,7 +42,7 @@ export default function Home() {
       className="min-h-screen bg-yellow-100 text-center text-black p-4"
       style={{ backgroundImage: "url('/images/studio-bg.jpg')" }}
     >
-      <h1 className="text-5xl mb-10 text-green-900 drop-shadow-md tracking-wide font-vintage">
+      <h1 className="text-5xl mb-10 text-white font-bold px-6 py-4 rounded-lg bg-black/60 shadow-lg font-vintage">
         Reggae Track Discovery
       </h1>
 
