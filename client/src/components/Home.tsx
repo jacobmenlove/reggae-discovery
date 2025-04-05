@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-type AlbumData = {
+type TrackData = {
   title: string;
   artist: string;
   artwork: string;
@@ -11,34 +11,27 @@ type AlbumData = {
 
 export default function Home() {
   const [isSpinning, setIsSpinning] = useState(false);
-  const [showAlbumDetails, setShowAlbumDetails] = useState(false);
-  const [album, setAlbum] = useState<AlbumData | null>(null);
+  const [showTrackDetails, setShowTrackDetails] = useState(false);
+  const [track, setTrack] = useState<TrackData | null>(null);
 
   const handleSpin = async () => {
     setIsSpinning(true);
-    setShowAlbumDetails(false);
-  
+    setShowTrackDetails(false);
+
     setTimeout(async () => {
       try {
-        console.log('📡 Fetching album from backend...');
-        const res = await fetch('/api/random-album'); // ✅ relative path!
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  
+        const res = await fetch('/api/random-album');
         const data = await res.json();
-        console.log('✅ Album fetched:', data);
-  
-        setAlbum(data);
-        setShowAlbumDetails(true);
+        setTrack(data);
+        setShowTrackDetails(true);
       } catch (err) {
-        console.error('❌ Error fetching album:', err);
-        alert('Something went wrong fetching the album. Please try again.');
+        console.error('❌ Error fetching reggae track:', err);
+        alert('Something went wrong fetching the track.');
       } finally {
         setIsSpinning(false);
       }
-    }, 3000);
+    }, 2000);
   };
-  
-  
 
   return (
     <div
@@ -46,12 +39,12 @@ export default function Home() {
       style={{ backgroundImage: "url('/images/studio-bg.jpg')" }}
     >
       <h1 className="text-5xl mb-10 text-yellow-300 drop-shadow-md tracking-wide">
-        Reggae Studio Discovery
+        Reggae Track Discovery
       </h1>
 
       <motion.img
         src="/images/vinyl.png"
-        alt="Vinyl record"
+        alt="Spinning vinyl"
         animate={{ rotate: isSpinning ? 360 : 0 }}
         transition={{ duration: 2, repeat: isSpinning ? Infinity : 0, ease: 'linear' }}
         className="w-40 h-40 mb-6 drop-shadow-2xl"
@@ -60,13 +53,13 @@ export default function Home() {
       <button
         onClick={handleSpin}
         disabled={isSpinning}
-        className="bg-red-600 text-yellow-100 px-8 py-4 rounded-full shadow-2xl hover:bg-red-700 transition-all duration-300 text-xl uppercase tracking-wider disabled:opacity-50"
+        className="bg-green-600 text-white px-8 py-4 rounded-full shadow-xl hover:bg-green-700 transition-all text-xl uppercase tracking-wider disabled:opacity-60"
       >
-        {isSpinning ? 'Loading...' : '🎵 Spin the Album'}
+        {isSpinning ? 'Loading...' : '🎵 Spin a Reggae Track'}
       </button>
 
       <AnimatePresence>
-        {showAlbumDetails && album && (
+        {showTrackDetails && track && (
           <motion.div
             initial={{ opacity: 0, y: 60 }}
             animate={{ opacity: 1, y: 0 }}
@@ -74,27 +67,28 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             className="mt-12 max-w-2xl w-full mx-auto bg-yellow-50 bg-opacity-5 p-6 rounded-lg shadow-2xl flex flex-col md:flex-row gap-6 backdrop-blur-sm border border-yellow-100 border-opacity-10"
           >
-            {/* Album Cover */}
+            {/* Artwork */}
             <img
-              src={album.artwork || '/images/sample-album.jpg'}
-              alt="Album cover"
+              src={track.artwork || '/images/sample-album.jpg'}
+              alt="Artwork"
               className="w-40 h-40 object-cover rounded-md shadow-lg border-4 border-yellow-200"
             />
 
-            {/* Album Info */}
+            {/* Track Info */}
             <div className="flex-1 text-left">
               <h2 className="text-2xl font-bold text-yellow-200 mb-2">
-                {album.title}
+                🎶 {track.title}
               </h2>
-              <p className="text-green-200 text-lg mb-2">{album.artist}</p>
+              <p className="text-green-200 text-lg mb-3">By {track.artist}</p>
+
               <ul className="list-disc list-inside text-green-100 text-sm mb-4">
-                {album.tracks.map((track, index) => (
-                  <li key={index}>{track}</li>
+                {track.tracks.map((t, i) => (
+                  <li key={i}>{t}</li>
                 ))}
               </ul>
 
-              {album.preview && (
-                <audio controls src={album.preview} className="mt-2 w-full">
+              {track.preview && (
+                <audio controls src={track.preview} className="w-full">
                   Your browser does not support the audio element.
                 </audio>
               )}
