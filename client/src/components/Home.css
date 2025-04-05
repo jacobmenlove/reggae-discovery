@@ -1,0 +1,69 @@
+/* Slow spin animation */
+@keyframes spin-slow {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .animate-spin-slow {
+    animation: spin-slow 5s linear infinite;
+  }
+  
+  /* Floating music notes base style */
+  .floating-notes {
+    position: absolute;
+    font-size: 2rem;
+    opacity: 0.2;
+    animation: floatNotes 10s linear infinite;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  
+  /* Left side notes */
+  .floating-notes-left {
+    content: "🎵 🎶";
+    left: 2%;
+    top: -50px;
+    animation-delay: 0s;
+  }
+  
+  /* Right side notes */
+  .floating-notes-right {
+    content: "🎶 🎵";
+    right: 2%;
+    top: -80px;
+    animation-delay: 4s;
+  }
+  
+  /* Floating up animation */
+  @keyframes floatNotes {
+    0% {
+      transform: translateY(0) rotate(0deg);
+      opacity: 0.1;
+    }
+    50% {
+      transform: translateY(50vh) rotate(10deg);
+      opacity: 0.4;
+    }
+    100% {
+      transform: translateY(100vh) rotate(-10deg);
+      opacity: 0;
+    }
+  }
+  
+  /* Custom audio player styling */
+  .custom-audio-player .rhap_container {
+    background: rgba(0, 0, 0, 0.5) !important;
+    border-radius: 8px;
+    color: #fff;
+  }
+  .custom-audio-player .rhap_progress-bar {
+    background-color: #facc15 !important; /* Tailwind yellow-400 */
+  }
+  .custom-audio-player .rhap_time {
+    color: #fff !important;
+  }
+  
