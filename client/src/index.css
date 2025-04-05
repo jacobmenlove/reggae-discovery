@@ -4,7 +4,7 @@
 
 @font-face {
   font-family: 'Vintage';
-  src: url('/fonts/Vintage.ttf') format('truetype');
+  src: url('../public//fonts/Vintage.ttf') format('truetype');
 }
 
 body {
