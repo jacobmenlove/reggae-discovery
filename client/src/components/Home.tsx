@@ -12,7 +12,7 @@ export default function Home() {
     setTimeout(() => {
       setIsSpinning(false);
       setShowAlbumDetails(true);
-      // TODO: Fetch album data here
+      // TODO: Replace dummy data with backend fetch
     }, 3000);
   };
 
@@ -47,10 +47,31 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 60 }}
             transition={{ duration: 0.6 }}
-            className="mt-12 text-left max-w-md w-full mx-auto bg-black bg-opacity-60 p-6 rounded-lg shadow-md"
+            className="mt-12 max-w-2xl w-full mx-auto bg-yellow-50 bg-opacity-5 p-6 rounded-lg shadow-2xl flex flex-col md:flex-row gap-6 backdrop-blur-sm border border-yellow-100 border-opacity-10"
           >
-            <h2 className="text-2xl font-bold text-yellow-200 mb-3">🎤 Album Title</h2>
-            <p className="text-lg text-green-200">Track List, Artist, Preview, etc.</p>
+            {/* Album Cover */}
+            <img
+              src="/images/sample-album.jpg"
+              alt="Album cover"
+              className="w-40 h-40 object-cover rounded-md shadow-lg border-4 border-yellow-200"
+            />
+
+            {/* Album Info */}
+            <div className="flex-1 text-left">
+              <h2 className="text-2xl font-bold text-yellow-200 mb-2">
+                ✨ Rocksteady Revival
+              </h2>
+              <p className="text-green-200 text-lg mb-2">By The Riddim Syndicate</p>
+              <ul className="list-disc list-inside text-green-100 text-sm mb-4">
+                <li>1. Roots Anthem</li>
+                <li>2. Mystic Vibe</li>
+                <li>3. Kingston Flow</li>
+              </ul>
+
+              <button className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded shadow-md transition">
+                ▶️ Play Preview
+              </button>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
