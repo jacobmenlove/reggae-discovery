@@ -1,23 +1,27 @@
 const axios = require('axios');
 
+function getRandomLetter() {
+  const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+  return alphabet[Math.floor(Math.random() * alphabet.length)];
+}
+
 exports.getRandomTrack = async (req, res) => {
   try {
+    const randomLetter = getRandomLetter();
+
     const response = await axios.get('https://itunes.apple.com/search', {
       params: {
-        term: 'reggae',
+        term: `reggae ${randomLetter}`, // forces iTunes to return a wider range
         entity: 'musicTrack',
         limit: 50,
       },
     });
 
-    // ✅ Filter strictly for "Reggae" genre
     const reggaeTracks = response.data.results.filter(track => {
       const isReggae = track.primaryGenreName?.toLowerCase() === 'reggae';
       const year = new Date(track.releaseDate).getFullYear();
-      const isOldSchool = year < 2000;
-      return isReggae && isOldSchool;
+      return isReggae && year < 2026;
     });
-    
 
     if (!reggaeTracks.length) {
       return res.status(404).json({ error: 'No reggae genre tracks found' });
