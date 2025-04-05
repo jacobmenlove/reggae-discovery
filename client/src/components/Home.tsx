@@ -1,20 +1,44 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+type AlbumData = {
+  title: string;
+  artist: string;
+  artwork: string;
+  preview: string;
+  tracks: string[];
+};
+
 export default function Home() {
   const [isSpinning, setIsSpinning] = useState(false);
   const [showAlbumDetails, setShowAlbumDetails] = useState(false);
+  const [album, setAlbum] = useState<AlbumData | null>(null);
 
-  const handleSpin = () => {
+  const handleSpin = async () => {
     setIsSpinning(true);
     setShowAlbumDetails(false);
-
-    setTimeout(() => {
-      setIsSpinning(false);
-      setShowAlbumDetails(true);
-      // TODO: Replace dummy data with backend fetch
+  
+    setTimeout(async () => {
+      try {
+        console.log('📡 Fetching album from backend...');
+        const res = await fetch('/api/random-album');
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  
+        const data = await res.json();
+        console.log('✅ Album fetched:', data);
+  
+        setAlbum(data);
+        setShowAlbumDetails(true);
+      } catch (err) {
+        console.error('❌ Error fetching album:', err);
+        alert('Something went wrong fetching the album. Please try again.');
+      } finally {
+        setIsSpinning(false);
+      }
     }, 3000);
   };
+  
+  
 
   return (
     <div
@@ -35,13 +59,14 @@ export default function Home() {
 
       <button
         onClick={handleSpin}
-        className="bg-red-600 text-yellow-100 px-8 py-4 rounded-full shadow-2xl hover:bg-red-700 transition-all duration-300 text-xl uppercase tracking-wider"
+        disabled={isSpinning}
+        className="bg-red-600 text-yellow-100 px-8 py-4 rounded-full shadow-2xl hover:bg-red-700 transition-all duration-300 text-xl uppercase tracking-wider disabled:opacity-50"
       >
-        🎵 Spin the Album
+        {isSpinning ? 'Loading...' : '🎵 Spin the Album'}
       </button>
 
       <AnimatePresence>
-        {showAlbumDetails && (
+        {showAlbumDetails && album && (
           <motion.div
             initial={{ opacity: 0, y: 60 }}
             animate={{ opacity: 1, y: 0 }}
@@ -51,7 +76,7 @@ export default function Home() {
           >
             {/* Album Cover */}
             <img
-              src="/images/sample-album.jpg"
+              src={album.artwork || '/images/sample-album.jpg'}
               alt="Album cover"
               className="w-40 h-40 object-cover rounded-md shadow-lg border-4 border-yellow-200"
             />
@@ -59,18 +84,20 @@ export default function Home() {
             {/* Album Info */}
             <div className="flex-1 text-left">
               <h2 className="text-2xl font-bold text-yellow-200 mb-2">
-                ✨ Rocksteady Revival
+                {album.title}
               </h2>
-              <p className="text-green-200 text-lg mb-2">By The Riddim Syndicate</p>
+              <p className="text-green-200 text-lg mb-2">{album.artist}</p>
               <ul className="list-disc list-inside text-green-100 text-sm mb-4">
-                <li>1. Roots Anthem</li>
-                <li>2. Mystic Vibe</li>
-                <li>3. Kingston Flow</li>
+                {album.tracks.map((track, index) => (
+                  <li key={index}>{track}</li>
+                ))}
               </ul>
 
-              <button className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded shadow-md transition">
-                ▶️ Play Preview
-              </button>
+              {album.preview && (
+                <audio controls src={album.preview} className="mt-2 w-full">
+                  Your browser does not support the audio element.
+                </audio>
+              )}
             </div>
           </motion.div>
         )}
