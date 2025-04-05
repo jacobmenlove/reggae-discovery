@@ -10,12 +10,16 @@ exports.getRandomTrack = async (req, res) => {
       },
     });
 
-    const tracks = response.data.results;
-    if (!tracks || tracks.length === 0) {
-      return res.status(404).json({ error: 'No reggae tracks found' });
+    // ✅ Filter strictly for "Reggae" genre
+    const reggaeTracks = response.data.results.filter(
+      track => track.primaryGenreName?.toLowerCase() === 'reggae'
+    );
+
+    if (!reggaeTracks.length) {
+      return res.status(404).json({ error: 'No reggae genre tracks found' });
     }
 
-    const random = tracks[Math.floor(Math.random() * tracks.length)];
+    const random = reggaeTracks[Math.floor(Math.random() * reggaeTracks.length)];
 
     const durationMillis = random.trackTimeMillis || 0;
     const durationFormatted = `${Math.floor(durationMillis / 60000)}:${String(
@@ -32,7 +36,7 @@ exports.getRandomTrack = async (req, res) => {
       preview: random.previewUrl,
     });
   } catch (err) {
-    console.error('❌ Error fetching track:', err.message);
+    console.error('❌ Error fetching reggae track:', err.message);
     res.status(500).json({ error: 'Failed to fetch track' });
   }
 };

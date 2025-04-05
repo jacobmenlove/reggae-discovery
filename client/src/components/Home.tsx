@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import AudioPlayer from 'react-h5-audio-player';
+import 'react-h5-audio-player/lib/styles.css';
 
 type TrackData = {
   title: string;
@@ -13,8 +15,8 @@ type TrackData = {
 
 export default function Home() {
   const [isSpinning, setIsSpinning] = useState(false);
-  const [showTrack, setShowTrack] = useState(false);
   const [track, setTrack] = useState<TrackData | null>(null);
+  const [showTrack, setShowTrack] = useState(false);
 
   const handleSpin = async () => {
     setIsSpinning(true);
@@ -22,40 +24,40 @@ export default function Home() {
 
     setTimeout(async () => {
       try {
-        const res = await fetch('/api/random-track');
+        const res = await fetch('http://localhost:9999/api/random-track');
         const data = await res.json();
         setTrack(data);
         setShowTrack(true);
       } catch (err) {
         console.error('❌ Error fetching track:', err);
-        alert('Failed to load track. Try again.');
+        alert('Something went wrong. Please try again.');
       } finally {
         setIsSpinning(false);
       }
-    }, 2000);
+    }, 1500);
   };
 
   return (
     <div
-      className="min-h-screen bg-yellow-100 bg-fixed bg-cover text-center font-vintage text-black p-4"
+      className="min-h-screen bg-yellow-100 text-center text-black p-4"
       style={{ backgroundImage: "url('/images/studio-bg.jpg')" }}
     >
-      <h1 className="text-5xl mb-10 text-green-900 drop-shadow-md tracking-wide">
+      <h1 className="text-5xl mb-10 text-green-900 drop-shadow-md tracking-wide font-vintage">
         Reggae Track Discovery
       </h1>
 
       <motion.img
         src="/images/vinyl.png"
-        alt="Vinyl spin"
+        alt="Vinyl"
         animate={{ rotate: isSpinning ? 360 : 0 }}
         transition={{ duration: 2, repeat: isSpinning ? Infinity : 0, ease: 'linear' }}
-        className="w-40 h-40 mb-6 drop-shadow-2xl"
+        className="w-40 h-40 mb-6 drop-shadow-2xl mx-auto"
       />
 
       <button
         onClick={handleSpin}
         disabled={isSpinning}
-        className="bg-green-600 text-white px-8 py-4 rounded-full shadow-lg hover:bg-green-700 transition-all text-xl uppercase tracking-wider disabled:opacity-50"
+        className="bg-green-700 text-white px-8 py-4 rounded-full shadow-lg hover:bg-green-800 transition-all text-xl uppercase tracking-wider disabled:opacity-50"
       >
         {isSpinning ? 'Loading...' : '🎵 Spin a Reggae Track'}
       </button>
@@ -84,11 +86,15 @@ export default function Home() {
                 <p className="text-sm text-yellow-100">Duration: {track.duration}</p>
 
                 {track.preview && (
-                  <audio
-                    controls
-                    src={track.preview}
-                    className="mt-4 w-full rounded bg-black bg-opacity-30"
-                  />
+                  <div className="mt-4 bg-black/30 rounded-lg overflow-hidden">
+                    <AudioPlayer
+                      src={track.preview}
+                      layout="stacked-reverse"
+                      showJumpControls={false}
+                      autoPlayAfterSrcChange={false}
+                      className="text-black"
+                    />
+                  </div>
                 )}
               </div>
             </div>
