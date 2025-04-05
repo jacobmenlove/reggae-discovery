@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Home() {
   const [isSpinning, setIsSpinning] = useState(false);
+  const [showAlbumDetails, setShowAlbumDetails] = useState(false);
 
   const handleSpin = () => {
     setIsSpinning(true);
+    setShowAlbumDetails(false);
+
     setTimeout(() => {
       setIsSpinning(false);
-      // TODO: Trigger backend API call to get random album
+      setShowAlbumDetails(true);
+      // TODO: Fetch album data here
     }, 3000);
   };
 
@@ -36,13 +40,20 @@ export default function Home() {
         🎵 Spin the Album
       </button>
 
-      {/* Placeholder for Album Details */}
-      <div className="mt-12 text-left max-w-md w-full mx-auto bg-black bg-opacity-60 p-6 rounded-lg shadow-md">
-        <h2 className="text-2xl font-bold text-yellow-200 mb-3">Album Title</h2>
-        <p className="text-lg text-green-200">
-          Track List, Artist, Preview, etc.
-        </p>
-      </div>
+      <AnimatePresence>
+        {showAlbumDetails && (
+          <motion.div
+            initial={{ opacity: 0, y: 60 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 60 }}
+            transition={{ duration: 0.6 }}
+            className="mt-12 text-left max-w-md w-full mx-auto bg-black bg-opacity-60 p-6 rounded-lg shadow-md"
+          >
+            <h2 className="text-2xl font-bold text-yellow-200 mb-3">🎤 Album Title</h2>
+            <p className="text-lg text-green-200">Track List, Artist, Preview, etc.</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
