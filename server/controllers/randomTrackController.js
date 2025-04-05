@@ -11,9 +11,13 @@ exports.getRandomTrack = async (req, res) => {
     });
 
     // ✅ Filter strictly for "Reggae" genre
-    const reggaeTracks = response.data.results.filter(
-      track => track.primaryGenreName?.toLowerCase() === 'reggae'
-    );
+    const reggaeTracks = response.data.results.filter(track => {
+      const isReggae = track.primaryGenreName?.toLowerCase() === 'reggae';
+      const year = new Date(track.releaseDate).getFullYear();
+      const isOldSchool = year < 2000;
+      return isReggae && isOldSchool;
+    });
+    
 
     if (!reggaeTracks.length) {
       return res.status(404).json({ error: 'No reggae genre tracks found' });
