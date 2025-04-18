@@ -1,37 +1,34 @@
 const express = require('express');
 const cors = require('cors');
-const path = require('path'); // Required for serving static files
-const trackRoutes = require('./routes/trackRoutes');
+const path = require('path');
+const trackRoutes = require('./routes/trackRoutes'); // Import the track routes
 
 const app = express();
+const PORT = process.env.PORT || 9999;  // Use Render's provided port or fallback to 9999 locally
 
-// Use the port provided by Render or fallback to 9999 locally
-const PORT = process.env.PORT || 9999;
-
-// Middleware
 app.use(cors());
 app.use(express.json());
 
 // API Routes
-app.use('/api', trackRoutes);
+app.use('/api', trackRoutes); // Your API route
 
-// Serve static files for the React frontend in production
+// Serve static files in production (React build)
 if (process.env.NODE_ENV === 'production') {
-  // Serve static files from the React app (build folder)
+  // Serve static files from the React build folder
   app.use(express.static(path.join(__dirname, 'client', 'build')));
 
-  // Handle all other routes (React Router) by serving index.html
+  // Route all non-API requests to React's index.html for client-side routing
   app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
   });
 }
 
-// Default Route for testing
+// Default route to verify backend is working
 app.get('/', (req, res) => {
   res.send('🎧 Reggae Discovery Backend is Running');
 });
 
 // Start the server
 app.listen(PORT, () => {
-  console.log(`🚀 Server running at http://localhost:${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });
