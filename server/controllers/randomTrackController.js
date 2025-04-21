@@ -2,7 +2,7 @@ const axios = require('axios');
 
 exports.getRandomTrack = async (req, res) => {
   try {
-    const offset = Math.floor(Math.random() * 20) * 50;  // iTunes allows 50 per request
+    const offset = Math.floor(Math.random() * 20) * 50; // iTunes allows 50 per request, offset in chunks
     const response = await axios.get('https://itunes.apple.com/search', {
       params: {
         term: 'reggae',
@@ -15,7 +15,7 @@ exports.getRandomTrack = async (req, res) => {
     const reggaeTracks = response.data.results.filter(track => {
       const isReggae = track.primaryGenreName?.toLowerCase() === 'reggae';
       const year = new Date(track.releaseDate).getFullYear();
-      return isReggae && year < 2000;  // Filter for tracks released before 2000
+      return isReggae && year < 2000;
     });
 
     if (!reggaeTracks.length) {
