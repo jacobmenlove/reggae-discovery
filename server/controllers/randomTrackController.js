@@ -2,7 +2,7 @@ const axios = require('axios');
 
 exports.getRandomTrack = async (req, res) => {
   try {
-    const offset = Math.floor(Math.random() * 20) * 50; // iTunes allows 50 per request, offset in chunks
+    const offset = Math.floor(Math.random() * 20) * 50;  // iTunes allows 50 per request
     const response = await axios.get('https://itunes.apple.com/search', {
       params: {
         term: 'reggae',

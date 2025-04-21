@@ -5,11 +5,10 @@ const { getRandomTrack } = require('../controllers/randomTrackController');
 // Define the route to get a random track
 router.get('/random-track', getRandomTrack);
 
-// Example of a route that expects an ID parameter
-// Ensure you handle the route with a parameter correctly (e.g., /track/:id)
+// Example of a route that expects an ID parameter (make sure this is correctly handled)
 router.get('/track/:id', (req, res) => {
   const trackId = req.params.id;
-  // Example logic to fetch track by ID (you can modify this as per your use case)
+  // Logic to fetch the track by ID (you can modify this as per your use case)
   res.json({ trackId });
 });
 

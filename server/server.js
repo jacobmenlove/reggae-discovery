@@ -13,14 +13,15 @@ app.use(cors());
 app.use(express.json());
 
 // API Routes - Ensure these routes are correctly set up with proper parameters
-app.use('/api', trackRoutes);
+app.use('/api', trackRoutes);  // Handle API routes like /api/random-track
 
 // Serve the React app in production
 if (process.env.NODE_ENV === 'production') {
   // Serve static files from the React app (build directory)
   app.use(express.static(path.join(__dirname, 'client', 'build')));
 
-  // Handle all other routes (React Router) by serving the index.html
+  // Ensure React Router works by handling all non-API routes
+  // Serve index.html for any route that is not an API route
   app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
   });
