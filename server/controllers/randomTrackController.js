@@ -15,7 +15,7 @@ exports.getRandomTrack = async (req, res) => {
     const reggaeTracks = response.data.results.filter(track => {
       const isReggae = track.primaryGenreName?.toLowerCase() === 'reggae';
       const year = new Date(track.releaseDate).getFullYear();
-      return isReggae && year < 2000;
+      return isReggae && year < 2010;
     });
 
     if (!reggaeTracks.length) {

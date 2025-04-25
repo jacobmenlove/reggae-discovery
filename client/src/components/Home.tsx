@@ -67,7 +67,7 @@ export default function Home() {
       <button
         onClick={handleSpin}
         disabled={isSpinning}
-        className="bg-green-700 text-white px-8 py-4 rounded-full shadow-lg hover:bg-green-800 transition-all text-xl uppercase tracking-wider disabled:opacity-50"
+        className="bg-yellow-300 text-black px-8 py-4 rounded-full shadow-lg hover:bg-red-500 transition-all text-xl uppercase tracking-wider disabled:opacity-50"
       >
         {isSpinning ? 'Loading...' : '🎵 Spin a Reggae Record'}
       </button>
@@ -113,7 +113,7 @@ export default function Home() {
                     href={track.trackViewUrl}  // Link to the track on Apple Music
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-yellow-300 text-black px-6 py-3 rounded-full shadow-lg hover:bg-yellow-200 transition-all text-lg"
+                    className="bg-yellow-300 text-black px-6 py-3 rounded-full shadow-lg hover:bg-red-500 transition-all text-lg"
                   >
                     Click Here to Listen on Apple Music
                   </a>
