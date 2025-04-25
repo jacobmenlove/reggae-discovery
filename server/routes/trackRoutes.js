@@ -6,7 +6,7 @@ router.get('/random-track', getRandomTrack);
 
 router.get('/track/:id', (req, res) => {
   const trackId = req.params.id;
-  res.json({ trackId }); 
+  res.json({ trackId });
 });
 
 module.exports = router;
