@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
-import './Home.css'; // Make sure to import the updated CSS
+import './Home.css'; 
 
 type TrackData = {
   title: string;
@@ -12,6 +12,7 @@ type TrackData = {
   duration: string;
   artwork: string;
   preview: string;
+  trackViewUrl: string; // URL to open the track on Apple Music
 };
 
 export default function Home() {
@@ -101,6 +102,18 @@ export default function Home() {
                     />
                   </div>
                 )}
+
+                {/* Add Open in Apple Music button */}
+                <div className="mt-4">
+                  <a
+                    href={track.trackViewUrl}  // Link to the track on Apple Music
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-yellow-300 text-black px-6 py-3 rounded-full shadow-lg hover:bg-yellow-200 transition-all text-lg"
+                  >
+                    Listen on Apple Music
+                  </a>
+                </div>
               </div>
             </div>
           </motion.div>
