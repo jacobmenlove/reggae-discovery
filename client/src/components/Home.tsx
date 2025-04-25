@@ -42,7 +42,7 @@ export default function Home() {
   if (track) {
     console.log('Apple Music URL:', track.trackViewUrl); // This will log the URL in the console
   }
-  
+
   return (
     <div
       className="min-h-screen bg-gradient-to-br from-yellow-100 via-green-100 to-red-100 text-center text-black p-4 relative overflow-hidden"
@@ -115,7 +115,7 @@ export default function Home() {
                     rel="noopener noreferrer"
                     className="bg-yellow-300 text-black px-6 py-3 rounded-full shadow-lg hover:bg-yellow-200 transition-all text-lg"
                   >
-                    Listen on Apple Music
+                    Click Here to Listen on Apple Music
                   </a>
                 </div>
               </div>
