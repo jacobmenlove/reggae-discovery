@@ -38,7 +38,11 @@ export default function Home() {
       }
     }, 1500);
   };
-
+  
+  if (track) {
+    console.log('Apple Music URL:', track.trackViewUrl); // This will log the URL in the console
+  }
+  
   return (
     <div
       className="min-h-screen bg-gradient-to-br from-yellow-100 via-green-100 to-red-100 text-center text-black p-4 relative overflow-hidden"

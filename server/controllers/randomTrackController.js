@@ -2,7 +2,7 @@ const axios = require('axios');
 
 exports.getRandomTrack = async (req, res) => {
   try {
-    const offset = Math.floor(Math.random() * 20) * 50; 
+    const offset = Math.floor(Math.random() * 20) * 50;
     const response = await axios.get('https://itunes.apple.com/search', {
       params: {
         term: 'reggae',
@@ -24,10 +24,14 @@ exports.getRandomTrack = async (req, res) => {
 
     const random = reggaeTracks[Math.floor(Math.random() * reggaeTracks.length)];
 
-    const durationMillis = random.trackTimeMillis || 0;
-    const durationFormatted = `${Math.floor(durationMillis / 60000)}:${String(
+    // Declare variables for duration calculation
+    let durationMillis = random.trackTimeMillis || 0;
+    let durationFormatted = `${Math.floor(durationMillis / 60000)}:${String(
       Math.floor((durationMillis % 60000) / 1000)
     ).padStart(2, '0')}`;
+
+    // Ensure trackViewUrl is being passed correctly
+    console.log('TrackViewUrl:', random.trackViewUrl);
 
     res.json({
       title: random.trackName,
@@ -37,6 +41,7 @@ exports.getRandomTrack = async (req, res) => {
       duration: durationFormatted,
       artwork: random.artworkUrl100?.replace('100x100', '600x600'),
       preview: random.previewUrl,
+      trackViewUrl: random.trackViewUrl, // Ensure this is included
     });
   } catch (err) {
     console.error('❌ Error fetching reggae track:', err.message);
