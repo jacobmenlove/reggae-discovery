@@ -1,0 +1,21 @@
+{
+    "name": "reggae-discovery",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+      "start": "npm run start --prefix client",  
+      "build": "npm run build --prefix client",  
+      "dev": "npm run dev --prefix client",      
+      "install-client": "npm install --prefix client",  
+      "install-backend": "npm install --prefix api",  
+      "deploy": "vercel"  
+    },
+    "dependencies": {
+      "axios": "^0.21.1",  
+      "express": "^4.17.1"
+    },
+    "devDependencies": {
+       "dev": "nodemon api/server.js"
+    }
+  }
+  
